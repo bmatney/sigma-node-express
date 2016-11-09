@@ -12,8 +12,9 @@ app.set('port', process.env.PORT || 3000);
 // Our song data
 var songs = [
   {
-    artist: "Bruce Springstein",
-    title: "Born in the U.S.A."
+    artist: "Bruce Springsteen",
+    title: "Born in the U.S.A.",
+    date: "11/8/2016",
   }
 ];
 
@@ -22,11 +23,36 @@ app.post('/songs', function(req, res) {
   // req.body is supplied by bodyParser above
   console.log("REQ body: ", req.body);
   var newSong = req.body;
-  songs.push(newSong);
-
   // created new resource
+
+if (checkSong(newSong)){
+  newSong.date = new Date().toLocaleDateString();
+  songs.push(newSong);
   res.sendStatus(201);
+  } else {
+  res.sendStatus(400);
+  }
 });
+
+
+function checkSong(song) {
+  if (song.artist === '' || song.title === '') {
+    console.log('Some fields are empty.');
+    return false;
+  } else {
+    for (var i = 0; i < songs.length; i++) {
+      var newSongTitle = song.title;
+      var newSongArtist = song.artist;
+      var titleList = songs[i].title;
+      var artistList = songs[i].artist;
+      if (newSongTitle === titleList && newSongArtist === artistList) {
+        console.log('That song has been entered already.');
+        return false;
+      }
+    }
+  }
+  return true;
+}
 
 app.get('/songs', function(req, res) {
   console.log('handling get request for songs');

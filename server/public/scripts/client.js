@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  console.log("it's alive!");
+  console.log("Program loaded!");
 
   $("#postSongForm").on("submit", function(event) {
     event.preventDefault();
@@ -23,9 +23,8 @@ $(document).ready(function() {
         } else {
           alert("Oh no! Your song didn't save correctly.");
         }
-      }
+      },
     })
-
   })
 
   getSongs();
@@ -48,10 +47,8 @@ $(document).ready(function() {
       var $el = $("#songContainer").children().last();
       $el.append('<h3>' + songs[i].title + '</h3>');
       $el.append('<p>By: ' + songs[i].artist + '</p>');
+      $el.append('<p>' + songs[i].date +'</p>')
     }
 
   }
-
-
-
 });
